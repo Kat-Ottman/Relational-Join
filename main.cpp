@@ -4,34 +4,17 @@
     Class:      CSC 1820 - Section 1
 */
 
-/* making one map for company data with keys for company id and values being the rest of the line
-		> companyID to companyData
-		> Step 2: get company information
-   making one map to find company Id
-		> name to companyID
-		> Step 1: get companies in alphabetical order
-		> think of as index of first map by company name
-   making one multimap to add transactions of companies
-		> multimaps have unique keys with multiple values (multiple transactions of companies)
-		> companyID to transactionData
-		> Step 3
-
-   check out <iomanip> for tools with strings
-		> 9.3 in zybooks
-		> use setw(anyNumber) to create column sizes
-
-		*/
-
 #include <iostream>
 #include <map>
-#include <Customer.h>
+#include "Customer.h"
 #include <fstream>
+#include "Purchases.h"
 
 int main(int argc, char *argv[])
 {
 	std::map<std::string, int> CNametoCID;
 	std::multimap<int, float> CIDtoCPurchase;
-	std::map<int, Customer> CIDtoCustomer;
+	std::map<std::string, Customer> CIDtoCustomer;
 
 	if (argc < 3)
 	{
@@ -40,18 +23,21 @@ int main(int argc, char *argv[])
 	}
 
 	/*
-	ifstream infile reads in the argv[1] and uses the Customer
-	function LoadCustomer() and Customer() to create new customers based on each line of
-	the text file at argv[1]. It also emplaces the customer IDs and the customer info
-	into the map CIDtoCustomer in the respective pair places <int, Customer>
+	Using the Customer class, the CIDtoCustomer map will be populated by the lines
+	in the argv[1] file.
 	*/
-	std::ifstream infile(argv[1]);
-	if (infile.is_open())
+	Customer c;
+
+	if (c.LoadCustomers(CIDtoCustomer, argv[1]))
 	{
+		for (auto it = CIDtoCustomer.begin(); it != CIDtoCustomer.end(); it++)
+		{
+			std::cout << it->first << " " << it->second.id << " " << it->second.name << std::endl;
+		}
 	}
 	else
 	{
-		std::cerr << "Unable to open file: " << argv[1] << std::endl;
+		return 1;
 	}
 
 	/*
@@ -60,14 +46,6 @@ int main(int argc, char *argv[])
 	It also emplaces the customer Ids and the customer purchase history into the
 	multimap CIDtoCpurchase in the respective pair places <int, float>.
 	*/
-	std::ifstream infile2(argv[2]);
-	if (infile2.is_open())
-	{
-	}
-	else
-	{
-		std::cerr << "Unable to open file: " << argv[2] << std::endl;
-	}
 
 	/*
 	The CNametoCID map is created based on the CIDtoCInfo map using the
