@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 
 /*
 Customer class will load file containing customer information and emplace it into the 1st map
@@ -13,7 +14,7 @@ class Customer
 	Customer();
 	Customer(std::string id, std::string name, std::string street, std::string city, std::string state, std::string zipcode);
 
-	static bool LoadCustomers(std::map<std::string, Customer> &CInfo, const char *filename, bool verbose = false);
+	static bool LoadCustomers(std::map<std::string, Customer> &CInfo, const std::string filename, bool verbose = false);
 
 	std::string id;
 	std::string name;
