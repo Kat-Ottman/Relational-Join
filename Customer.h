@@ -22,6 +22,4 @@ class Customer
 	std::string city;
 	std::string state;
 	std::string zipcode;
-
-	static int tokens_to_expect;
 };

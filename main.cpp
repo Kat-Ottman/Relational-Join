@@ -33,18 +33,18 @@ int main(int argc, char *argv[])
 	if (c.LoadCustomers(CIDtoCustomer, argv[1]))
 	{
 		if (p.LoadPurchase(CIDtoCPurchase, argv[2]))
-			(
+		{
 
-				for (auto it = CIDtoCustomer.begin(); it != CIDtoCustomer.end(); it++) {
-					CNametoCID.emplace((*(it)).second.name, (*(it)).first);
-				}
+			for (auto it = CIDtoCustomer.begin(); it != CIDtoCustomer.end(); it++)
+			{
+				CNametoCID.emplace((*(it)).second.name, (*(it)).first);
+			}
 
-				/* for (auto iter = CNametoCID.begin(); iter != CNametoCID.end(); iter++)
+			/* for (auto iter = CNametoCID.begin(); iter != CNametoCID.end(); iter++)
 		{
 			std::cout << (*(iter)).first << "," << (*(iter)).second << std::endl;
 		} */
-
-			)
+		}
 	}
 	else
 	{
@@ -63,10 +63,10 @@ int main(int argc, char *argv[])
 	key and the first constructor of the CIDtoCInfo map.
 	*/
 
-	std::cout << "File: " << argv[1] << " contained " << c.tokens_to_expect << " records." << std::endl;
-	std::cout << "File: " << argv[2] << " contained " << p.tokens_to_expect << " records." << std::endl;
+	std::cout << "File: " << argv[1] << " contained " << CIDtoCustomer.size() << " records." << std::endl;
+	std::cout << "File: " << argv[2] << " contained " << CIDtoCPurchase.size() << " records." << std::endl;
 	std::cout << "Sales summary report:" << std::endl;
-	std::cout << std::setw(21) << std::setfill('=') << std::endl;
+	std::cout << "=====================" << std::endl;
 	std::cout << std::setw(10) << std::left << "ID:";
 	std::cout << std::setw(40) << "Name:";
 	std::cout << std::setw(8) << "State:";

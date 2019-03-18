@@ -25,7 +25,6 @@ bool Customer::LoadCustomers(std::map<std::string, Customer> &CInfo, const std::
 
 	if (infile1.is_open())
 	{
-		tokens_to_expect++;
 		std::string line;
 
 		while (getline(infile1, line))
@@ -75,8 +74,6 @@ bool Customer::LoadCustomers(std::map<std::string, Customer> &CInfo, const std::
 			std::cout << customerIter.id << customerIter.name << std::endl;
 		}
 	}
-
-	std::cout << tokens_to_expect << std::endl;
 
 	return verbose;
 }

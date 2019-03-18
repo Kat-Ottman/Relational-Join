@@ -42,7 +42,6 @@ bool Purchases::LoadPurchase(std::multimap<std::string, float> &ptable, const st
 
 		while (getline(infile, line))
 		{
-			tokens_to_expect++;
 			std::vector<std::string> space;
 
 			if (line == "")
@@ -54,15 +53,16 @@ bool Purchases::LoadPurchase(std::multimap<std::string, float> &ptable, const st
 			std::string check = space.at(1);
 			std::string duration = space.at(2);
 			float number = 0.0;
-			if (SafeFloatFromString(space.at(3), number))
-			{
-				number = stof(space.at(3));
-			}
+
+			/* 			if (SafeFloatFromString(space.at(3), number))
+			{ */
+			number = stof(space.at(3));
+			/* 			}
 			else
 			{
 				std::cerr << "Unable to convert string to float." << std::endl;
 				return false;
-			}
+			} */
 
 			Purchases p = Purchases(badge, check, duration, number);
 

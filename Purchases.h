@@ -16,6 +16,4 @@ class Purchases
 	float amount;
 
 	static bool SafeFloatFromString(std::string &input, float &v);
-
-	static int tokens_to_expect;
 };
