@@ -28,24 +28,23 @@ int main(int argc, char *argv[])
 	in the argv[1] file.
 	*/
 	Customer c = Customer("id", "name", "street", "city", "state", "zipcode");
-	//Purchase p = Purchase("id", "invoice", "date", 0.0);
+	Purchases p = Purchases("id", "invoice", "date", 0.0);
 
 	if (c.LoadCustomers(CIDtoCustomer, argv[1]))
 	{
-		//if(p.LoadPurchases(CIDtoCPurchase, argv[2]))
-		//(
+		if (p.LoadPurchase(CIDtoCPurchase, argv[2]))
+			(
 
-		for (auto it = CIDtoCustomer.begin(); it != CIDtoCustomer.end(); it++)
-		{
-			CNametoCID.emplace((*(it)).second.name, (*(it)).first);
-		}
+				for (auto it = CIDtoCustomer.begin(); it != CIDtoCustomer.end(); it++) {
+					CNametoCID.emplace((*(it)).second.name, (*(it)).first);
+				}
 
-		/* for (auto iter = CNametoCID.begin(); iter != CNametoCID.end(); iter++)
+				/* for (auto iter = CNametoCID.begin(); iter != CNametoCID.end(); iter++)
 		{
 			std::cout << (*(iter)).first << "," << (*(iter)).second << std::endl;
 		} */
 
-		//)
+			)
 	}
 	else
 	{
@@ -65,7 +64,7 @@ int main(int argc, char *argv[])
 	*/
 
 	std::cout << "File: " << argv[1] << " contained " << c.tokens_to_expect << " records." << std::endl;
-	//std::cout << "File: " << argv[2] << " contained " << p.tokens_to_expect << " records." << std::endl;
+	std::cout << "File: " << argv[2] << " contained " << p.tokens_to_expect << " records." << std::endl;
 	std::cout << "Sales summary report:" << std::endl;
 	std::cout << std::setw(21) << std::setfill('=') << std::endl;
 	std::cout << std::setw(10) << std::left << "ID:";
