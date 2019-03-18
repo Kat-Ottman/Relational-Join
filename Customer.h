@@ -23,5 +23,5 @@ class Customer
 	std::string state;
 	std::string zipcode;
 
-	static const int tokens_to_expect;
+	static int tokens_to_expect;
 };

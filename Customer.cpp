@@ -10,12 +10,12 @@
 
 Customer::Customer(std::string id, std::string name, std::string street, std::string city, std::string state, std::string zipcode)
 {
-	id = this->id;
-	name = this->name;
-	street = this->street;
-	city = this->city;
-	state = this->state;
-	zipcode = this->zipcode;
+	this->id = id;
+	this->name = name;
+	this->street = street;
+	this->city = city;
+	this->state = state;
+	this->zipcode = zipcode;
 }
 
 bool Customer::LoadCustomers(std::map<std::string, Customer> &CInfo, const std::string filename, bool verbose)
@@ -25,25 +25,26 @@ bool Customer::LoadCustomers(std::map<std::string, Customer> &CInfo, const std::
 
 	if (infile1.is_open())
 	{
-		std::string *line = NULL;
+		tokens_to_expect++;
+		std::string line;
 
-		while (getline(infile1, (*(line))))
+		while (getline(infile1, line))
 		{
-			std::vector<std::string> *CustomerInfo = NULL;
+			std::vector<std::string> CustomerInfo;
 
-			if ((*(line)) == "")
+			if (line == "")
 			{
 				continue;
 			}
 
-			Split(CustomerInfo, line);
+			Split(&CustomerInfo, &line);
 
-			std::string ID = (*(CustomerInfo)).at(0);
-			std::string NAME = (*(CustomerInfo)).at(1);
-			std::string STREET = (*(CustomerInfo)).at(2);
-			std::string CITY = (*(CustomerInfo)).at(3);
-			std::string STATE = (*(CustomerInfo)).at(4);
-			std::string ZIPCODE = (*(CustomerInfo)).at(5);
+			std::string ID = CustomerInfo.at(0);
+			std::string NAME = CustomerInfo.at(1);
+			std::string STREET = CustomerInfo.at(2);
+			std::string CITY = CustomerInfo.at(3);
+			std::string STATE = CustomerInfo.at(4);
+			std::string ZIPCODE = CustomerInfo.at(5);
 
 			Customer newCustomer = Customer(ID, NAME, STREET, CITY, STATE, ZIPCODE);
 			CustomerList.push_back(newCustomer);
@@ -64,6 +65,18 @@ bool Customer::LoadCustomers(std::map<std::string, Customer> &CInfo, const std::
 		CInfo.emplace(customerIT.id, customerIT);
 		verbose = true;
 	}
+
+	if (!verbose)
+	{
+		for (auto iter = CustomerList.begin(); iter != CustomerList.end(); ++iter)
+		{
+			Customer customerIter = (*(iter));
+			std::cout << "Do these values match your file? Is this the right file to read from?" << std::endl;
+			std::cout << customerIter.id << customerIter.name << std::endl;
+		}
+	}
+
+	std::cout << tokens_to_expect << std::endl;
 
 	return verbose;
 }

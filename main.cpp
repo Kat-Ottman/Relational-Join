@@ -9,11 +9,12 @@
 #include "Customer.h"
 #include <fstream>
 #include "Purchases.h"
+#include <iomanip>
 
 int main(int argc, char *argv[])
 {
-	std::map<std::string, int> CNametoCID;
-	std::multimap<int, float> CIDtoCPurchase;
+	std::map<std::string, std::string> CNametoCID;
+	std::multimap<std::string, float> CIDtoCPurchase;
 	std::map<std::string, Customer> CIDtoCustomer;
 
 	if (argc < 3)
@@ -26,14 +27,25 @@ int main(int argc, char *argv[])
 	Using the Customer class, the CIDtoCustomer map will be populated by the lines
 	in the argv[1] file.
 	*/
-	Customer c;
+	Customer c = Customer("id", "name", "street", "city", "state", "zipcode");
+	//Purchase p = Purchase("id", "invoice", "date", 0.0);
 
 	if (c.LoadCustomers(CIDtoCustomer, argv[1]))
 	{
+		//if(p.LoadPurchases(CIDtoCPurchase, argv[2]))
+		//(
+
 		for (auto it = CIDtoCustomer.begin(); it != CIDtoCustomer.end(); it++)
 		{
-			std::cout << it->first << " " << it->second.id << " " << it->second.name << std::endl;
+			CNametoCID.emplace((*(it)).second.name, (*(it)).first);
 		}
+
+		/* for (auto iter = CNametoCID.begin(); iter != CNametoCID.end(); iter++)
+		{
+			std::cout << (*(iter)).first << "," << (*(iter)).second << std::endl;
+		} */
+
+		//)
 	}
 	else
 	{
@@ -51,6 +63,16 @@ int main(int argc, char *argv[])
 	The CNametoCID map is created based on the CIDtoCInfo map using the
 	key and the first constructor of the CIDtoCInfo map.
 	*/
+
+	std::cout << "File: " << argv[1] << " contained " << c.tokens_to_expect << " records." << std::endl;
+	//std::cout << "File: " << argv[2] << " contained " << p.tokens_to_expect << " records." << std::endl;
+	std::cout << "Sales summary report:" << std::endl;
+	std::cout << std::setw(21) << std::setfill('=') << std::endl;
+	std::cout << std::setw(10) << std::left << "ID:";
+	std::cout << std::setw(40) << "Name:";
+	std::cout << std::setw(8) << "State:";
+	std::cout << std::setw(12) << "Purchases:";
+	std::cout << std::setw(15) << "Total:" << std::endl;
 
 	return 0;
 }
