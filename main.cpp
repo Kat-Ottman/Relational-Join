@@ -45,6 +45,10 @@ int main(int argc, char *argv[])
 			std::cout << (*(iter)).first << "," << (*(iter)).second << std::endl;
 		} */
 		}
+		else
+		{
+			return 1;
+		}
 	}
 	else
 	{
@@ -72,6 +76,85 @@ int main(int argc, char *argv[])
 	std::cout << std::setw(8) << "State:";
 	std::cout << std::setw(12) << "Purchases:";
 	std::cout << std::setw(15) << "Total:" << std::endl;
+
+	std::string UserIn;
+
+	std::cout << "Enter a company you would like to find: " << std::endl;
+	std::cin >> UserIn;
+
+	auto it = CNametoCID.find(UserIn);
+
+	if (it == CNametoCID.end())
+	{
+		std::cerr << "Customer: " << UserIn << " could not be found." << std::endl;
+	}
+	else
+	{
+		std::cout << std::setw(10) << (*(it)).second;
+		std::cout << std::setw(40) << UserIn;
+	}
+
+	auto iter = CIDtoCustomer.find((*(it)).second);
+
+	if (iter == CIDtoCustomer.end())
+	{
+		std::cerr << "Customer: " << UserIn << " could not be found." << std::endl;
+	}
+	else
+	{
+		std::cout << std::setw(8) << (*(iter)).second.state;
+	}
+
+	int counter = 0;
+	float CPAmount = 0.0;
+
+	for (auto iterator = CIDtoCPurchase.begin(); iterator != CIDtoCPurchase.end(); iterator++)
+	{
+		if ((*(iterator)).first == (*(it)).second)
+		{
+			counter++;
+			CPAmount += (*(iterator)).second;
+		}
+	}
+
+	std::cout << std::setw(12) << counter;
+	std::cout << std::setw(15) << CPAmount << std::endl;
+
+	/* for (auto iterator = CNametoCID.begin(); iterator != CNametoCID.end(); iterator++)
+	{
+		std::pair<std::string, std::string> twin = (*(iterator));
+		std::string FIRST1 = twin.first;
+		std::string SECOND1 = twin.second;
+
+		std::cout << std::setw(10) << SECOND1;
+		std::cout << std::setw(40) << FIRST1;
+
+		auto it = CIDtoCustomer.find(SECOND1);
+
+		if (it == CIDtoCustomer.end())
+		{
+			std::cerr << "Customer: " << FIRST1 << " could not be found." << std::endl;
+		}
+		else
+		{
+			std::cout << std::setw(8) << (*(it)).second.state;
+		}
+
+		int counter = 0;
+		float CPAmount = 0.0;
+
+		for (auto iter = CIDtoCPurchase.begin(); iter != CIDtoCPurchase.end(); iter++)
+		{
+			if ((*(iter)).first == SECOND1)
+			{
+				counter++;
+				CPAmount += (*(iter)).second;
+			}
+		}
+
+		std::cout << std::setw(12) << counter;
+		std::cout << std::setw(15) << CPAmount << std::endl;
+	} */
 
 	return 0;
 }

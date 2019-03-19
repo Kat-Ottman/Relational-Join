@@ -8,7 +8,7 @@
 #include <string>
 #include <list>
 
-bool SafeFloatFromString(std::string &input, float &v)
+bool Purchases::SafeFloatFromString(std::string &input, float &v)
 {
 	bool returnValue = true;
 	v = 0;
@@ -33,7 +33,6 @@ Purchases::Purchases(std::string id, std::string invoice, std::string date, floa
 bool Purchases::LoadPurchase(std::multimap<std::string, float> &ptable, const std::string filename, bool verbose)
 {
 	std::ifstream infile(filename);
-
 	std::list<Purchases> pod;
 
 	if (infile.is_open())
@@ -45,7 +44,9 @@ bool Purchases::LoadPurchase(std::multimap<std::string, float> &ptable, const st
 			std::vector<std::string> space;
 
 			if (line == "")
+			{
 				continue;
+			}
 
 			Split(&space, &line);
 
@@ -54,21 +55,29 @@ bool Purchases::LoadPurchase(std::multimap<std::string, float> &ptable, const st
 			std::string duration = space.at(2);
 			float number = 0.0;
 
-			/* 			if (SafeFloatFromString(space.at(3), number))
-			{ */
-			number = stof(space.at(3));
-			/* 			}
+			std::cout << "Got to line 58." << std::endl;
+
+			if (SafeFloatFromString(space.at(3), number))
+			{
+				number = stof(space.at(3));
+			}
 			else
 			{
 				std::cerr << "Unable to convert string to float." << std::endl;
 				return false;
-			} */
+			}
 
 			Purchases p = Purchases(badge, check, duration, number);
 
 			pod.push_back(p);
 		}
 	}
+	else
+	{
+		std::cerr << "Unable to open file: " << (filename) << std::endl;
+		return verbose;
+	}
+
 	infile.close();
 
 	for (auto it = pod.begin(); it != pod.end(); ++it)
@@ -78,7 +87,7 @@ bool Purchases::LoadPurchase(std::multimap<std::string, float> &ptable, const st
 
 		ptable.insert(std::pair<std::string, float>(newOne.id, newOne.amount));
 
-		return true;
+		verbose = true;
 	}
 
 	return verbose;

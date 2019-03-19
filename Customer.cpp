@@ -52,7 +52,7 @@ bool Customer::LoadCustomers(std::map<std::string, Customer> &CInfo, const std::
 	else
 	{
 		std::cerr << "Unable to open file: " << (filename) << std::endl;
-		verbose = false;
+		return verbose;
 	}
 
 	infile1.close();
