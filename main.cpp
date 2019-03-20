@@ -111,8 +111,7 @@ int main(int argc, char *argv[])
 		}
 
 		std::cout << std::setw(12) << counter;
-		std::cout << std::setprecision(2);
-		std::cout << std::fixed << CPAmount << std::endl;
+		std::cout << std::fixed << std::setprecision(2) << CPAmount << std::endl;
 	}
 
 	return 0;
