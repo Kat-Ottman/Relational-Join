@@ -25,7 +25,10 @@ int main(int argc, char *argv[])
 
 	/*
 	Using the Customer class, the CIDtoCustomer map will be populated by the lines
-	in the argv[1] file.
+	in the argv[1] file. Only after this is completed, using the Purchases class,
+	the CIDtoCPurchase map will be populated by the lines in the argv[2] file.
+	Then, the CNametoCID map will be created using the first map. If this fails,
+	the program will stop.
 	*/
 	Customer c = Customer("id", "name", "street", "city", "state", "zipcode");
 	Purchases p = Purchases("id", "invoice", "date", 0.0);
@@ -56,17 +59,10 @@ int main(int argc, char *argv[])
 	}
 
 	/*
-	ifstream infile2 is read in the argv[2] and uses the Purchases fuction LoadPurchase()
-	and Purchase() to create new purchases based on each line of the text file at argv[2].
-	It also emplaces the customer Ids and the customer purchase history into the
-	multimap CIDtoCpurchase in the respective pair places <int, float>.
+	Results from all maps and multimap are printed out in a sales summary report.
+	Results are sorted alphabetically. This will print out an error if a
+	Customer cannot be found.
 	*/
-
-	/*
-	The CNametoCID map is created based on the CIDtoCInfo map using the
-	key and the first constructor of the CIDtoCInfo map.
-	*/
-
 	std::cout << "File: " << argv[1] << " contained " << CIDtoCustomer.size() << " records." << std::endl;
 	std::cout << "File: " << argv[2] << " contained " << CIDtoCPurchase.size() << " records." << std::endl;
 	std::cout << "Sales summary report:" << std::endl;
@@ -77,50 +73,7 @@ int main(int argc, char *argv[])
 	std::cout << std::setw(12) << "Purchases:";
 	std::cout << std::setw(15) << "Total:" << std::endl;
 
-	std::string UserIn;
-
-	std::cout << "Enter a company you would like to find: " << std::endl;
-	std::cin >> UserIn;
-
-	auto it = CNametoCID.find(UserIn);
-
-	if (it == CNametoCID.end())
-	{
-		std::cerr << "Customer: " << UserIn << " could not be found." << std::endl;
-	}
-	else
-	{
-		std::cout << std::setw(10) << (*(it)).second;
-		std::cout << std::setw(40) << UserIn;
-	}
-
-	auto iter = CIDtoCustomer.find((*(it)).second);
-
-	if (iter == CIDtoCustomer.end())
-	{
-		std::cerr << "Customer: " << UserIn << " could not be found." << std::endl;
-	}
-	else
-	{
-		std::cout << std::setw(8) << (*(iter)).second.state;
-	}
-
-	int counter = 0;
-	float CPAmount = 0.0;
-
-	for (auto iterator = CIDtoCPurchase.begin(); iterator != CIDtoCPurchase.end(); iterator++)
-	{
-		if ((*(iterator)).first == (*(it)).second)
-		{
-			counter++;
-			CPAmount += (*(iterator)).second;
-		}
-	}
-
-	std::cout << std::setw(12) << counter;
-	std::cout << std::setw(15) << CPAmount << std::endl;
-
-	/* for (auto iterator = CNametoCID.begin(); iterator != CNametoCID.end(); iterator++)
+	for (auto iterator = CNametoCID.begin(); iterator != CNametoCID.end(); iterator++)
 	{
 		std::pair<std::string, std::string> twin = (*(iterator));
 		std::string FIRST1 = twin.first;
@@ -141,8 +94,13 @@ int main(int argc, char *argv[])
 		}
 
 		int counter = 0;
-		float CPAmount = 0.0;
+		float CPAmount = 0.00;
 
+		/*
+		Total does not print correctly. The std::fixed function overrides the adding
+		onto CPAmount so that it reverts back to the original initialization of the
+		variable.
+		*/
 		for (auto iter = CIDtoCPurchase.begin(); iter != CIDtoCPurchase.end(); iter++)
 		{
 			if ((*(iter)).first == SECOND1)
@@ -153,8 +111,9 @@ int main(int argc, char *argv[])
 		}
 
 		std::cout << std::setw(12) << counter;
-		std::cout << std::setw(15) << CPAmount << std::endl;
-	} */
+		std::cout << std::setprecision(2);
+		std::cout << std::fixed << CPAmount << std::endl;
+	}
 
 	return 0;
 }

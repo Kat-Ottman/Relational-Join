@@ -5,5 +5,5 @@
 class Split
 {
   public:
-	Split(std::vector<std::string> *tokens, std::string *line);
+	Split(std::vector<std::string> &tokens, std::string &line, std::string &delimeter);
 };

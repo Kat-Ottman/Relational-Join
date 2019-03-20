@@ -4,10 +4,6 @@
 #include <map>
 #include <vector>
 
-/*
-Customer class will load file containing customer information and emplace it into the 1st map
-that will have a key containing the customer ID and the customer's information as the value.
-*/
 class Customer
 {
   public:

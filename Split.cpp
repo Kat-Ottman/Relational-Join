@@ -3,23 +3,27 @@
 #include <string>
 #include <vector>
 
-Split::Split(std::vector<std::string> *tokens, std::string *line)
+/*
+Finds first occurance of delimeter in line and inserts characters
+found between delimeter and beginning of line into vector. Repeats until
+there are no more delimeters found in line.
+
+Catches last characters in line that are without a delimeter and inserts
+into vector.
+*/
+Split::Split(std::vector<std::string> &tokens, std::string &line, std::string &delimeter)
 {
-	size_t start = 0;
-	size_t last = (*(line)).find_first_of(",");
+	size_t pos;
 	size_t npos = -1;
 
-	while (last != npos)
+	while ((pos = line.find(delimeter)) != npos)
 	{
-		if (last > start)
-		{
-
-			(*(tokens)).push_back((*(line)).substr(start, (last - start)));
-		}
-
-		start = ++last;
-		last = (*(line)).find_first_of(" ", last);
+		tokens.push_back(line.substr(0, pos));
+		line.erase(0, pos + delimeter.length());
 	}
 
-	(*(tokens)).push_back((*(line)).substr(start));
+	if (line.length() > 0)
+	{
+		tokens.push_back(line);
+	}
 }
