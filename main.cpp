@@ -101,17 +101,25 @@ int main(int argc, char *argv[])
 		onto CPAmount so that it reverts back to the original initialization of the
 		variable.
 		*/
-		for (auto iter = CIDtoCPurchase.begin(); iter != CIDtoCPurchase.end(); iter++)
+
+		auto iter = CIDtoCPurchase.equal_range(SECOND1);
+		for (auto itr = iter.first; itr != iter.second; itr++)
+		{
+			counter++;
+			CPAmount += (*(itr)).second;
+		}
+
+		std::cout << std::setw(12) << counter;
+		std::cout << std::fixed << std::setprecision(2) << CPAmount << std::endl;
+
+		/* 		for (auto iter = CIDtoCPurchase.begin(); iter != CIDtoCPurchase.end(); iter++)
 		{
 			if ((*(iter)).first == SECOND1)
 			{
 				counter++;
 				CPAmount += (*(iter)).second;
 			}
-		}
-
-		std::cout << std::setw(12) << counter;
-		std::cout << std::fixed << std::setprecision(2) << CPAmount << std::endl;
+		} */
 	}
 
 	return 0;
