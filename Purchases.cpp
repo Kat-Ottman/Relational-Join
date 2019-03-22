@@ -12,7 +12,7 @@
 Provides a check to make sure that the string can be changed into
 a float. Returns false if not possible.
 */
-bool Purchases::SafeFloatFromString(std::string &input, float &v)
+bool Purchases::SafeFloatFromString(std::string &input, long double &v)
 {
 	bool returnValue = true;
 	v = 0;
@@ -30,7 +30,7 @@ bool Purchases::SafeFloatFromString(std::string &input, float &v)
 /*
 Sets all given strings to known strings in Purchase class to create a Purchase type variable.
 */
-Purchases::Purchases(std::string id, std::string invoice, std::string date, float amout)
+Purchases::Purchases(std::string id, std::string invoice, std::string date, long double amount)
 {
 	this->id = id;
 	this->invoice = invoice;
@@ -70,7 +70,7 @@ bool Purchases::LoadPurchase(std::multimap<std::string, float> &ptable, const st
 			std::string badge = space.at(0);
 			std::string check = space.at(1);
 			std::string duration = space.at(2);
-			float number = 0.0;
+			long double number = 0.0;
 
 			if (SafeFloatFromString(space.at(3), number))
 			{
